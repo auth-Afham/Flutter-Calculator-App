@@ -23,25 +23,36 @@ class _GameScreenState extends State<GameScreen> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
-          var data = snapshot.data!.data();
-          // Use data to update game UI
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Game State: ${data['state']}'),
-                ElevatedButton(
-                  onPressed: () {
-                    // Implement game logic here
-                  },
-                  child: Text('Start Game'),
-                ),
-              ],
-            ),
-          );
+          // Check if snapshot has data
+          if (snapshot.hasData && snapshot.data!.exists) {
+            // Access the data safely
+            var data = snapshot.data!.data() as Map<String, dynamic>;
+            var gameState = data['state']; // Example: accessing 'state' field
+
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Game State: $gameState'),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Implement game logic here
+                    },
+                    child: Text('Start Game'),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Text('No data available'),
+            );
+          }
         },
       ),
     );
