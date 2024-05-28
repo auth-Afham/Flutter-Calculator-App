@@ -1,52 +1,57 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(CalculatorApp());
+  runApp(CalculatorApp()); // Entry point of the application
 }
 
 class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Calculator',
+      title: 'Calculator', // Title of the application
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue, // Theme color
       ),
-      home: CalculatorHomePage(),
+      home: CalculatorHomePage(), // Home page of the application
     );
   }
 }
 
 class CalculatorHomePage extends StatefulWidget {
   @override
-  _CalculatorHomePageState createState() => _CalculatorHomePageState();
+  _CalculatorHomePageState createState() => _CalculatorHomePageState(); // Creates the state for the CalculatorHomePage
 }
 
 class _CalculatorHomePageState extends State<CalculatorHomePage> {
-  String output = "0";
-  String _output = "0";
-  double num1 = 0.0;
-  double num2 = 0.0;
-  String operand = "";
+  String output = "0"; // Displayed output on the calculator screen
+  String _output = "0"; // Internal output to handle calculations
+  double num1 = 0.0; // First operand
+  double num2 = 0.0; // Second operand
+  String operand = ""; // Operator (+, -, *, /)
 
+  // Method to handle button presses
   buttonPressed(String buttonText) {
     if (buttonText == "CLEAR") {
+      // Clear all values if CLEAR button is pressed
       _output = "0";
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
     } else if (buttonText == "+" || buttonText == "-" || buttonText == "/" || buttonText == "*") {
+      // If an operator is pressed, store the first operand and operator
       num1 = double.parse(output);
       operand = buttonText;
       _output = "0";
     } else if (buttonText == ".") {
+      // Handle decimal point
       if (_output.contains(".")) {
-        print("Already contains a decimals");
+        print("Already contains a decimal");
         return;
       } else {
         _output = _output + buttonText;
       }
     } else if (buttonText == "=") {
+      // Calculate the result if = is pressed
       num2 = double.parse(output);
 
       if (operand == "+") {
@@ -62,22 +67,26 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
         _output = (num1 / num2).toString();
       }
 
+      // Reset operands and operator after calculation
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
     } else {
+      // Append the pressed button value to the output
       _output = _output + buttonText;
     }
 
+    // Update the displayed output
     setState(() {
       output = double.parse(_output).toStringAsFixed(2);
     });
   }
 
+  // Method to build calculator buttons
   Widget buildButton(String buttonText) {
     return Expanded(
       child: OutlinedButton(
-        onPressed: () => buttonPressed(buttonText),
+        onPressed: () => buttonPressed(buttonText), // Handle button press
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Text(
@@ -96,15 +105,15 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calculator"),
+        title: Text("Calculator"), // Title of the AppBar
       ),
       body: Column(
         children: <Widget>[
           Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+            alignment: Alignment.centerRight, // Align the text to the right
+            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0), // Padding for the container
             child: Text(
-              output,
+              output, // Display the current output
               style: TextStyle(
                 fontSize: 48.0,
                 fontWeight: FontWeight.bold,
@@ -112,10 +121,11 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
             ),
           ),
           Expanded(
-            child: Divider(),
+            child: Divider(), // Divider between the display and buttons
           ),
           Column(
             children: [
+              // First row of buttons
               Row(
                 children: [
                   buildButton("7"),
@@ -124,6 +134,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                   buildButton("/"),
                 ],
               ),
+              // Second row of buttons
               Row(
                 children: [
                   buildButton("4"),
@@ -132,6 +143,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                   buildButton("*"),
                 ],
               ),
+              // Third row of buttons
               Row(
                 children: [
                   buildButton("1"),
@@ -140,6 +152,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                   buildButton("-"),
                 ],
               ),
+              // Fourth row of buttons
               Row(
                 children: [
                   buildButton("."),
@@ -148,6 +161,7 @@ class _CalculatorHomePageState extends State<CalculatorHomePage> {
                   buildButton("+"),
                 ],
               ),
+              // Fifth row of buttons
               Row(
                 children: [
                   buildButton("CLEAR"),
