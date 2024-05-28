@@ -1,7 +1,3 @@
-Certainly! Based on the structure you provided, here's a more simplified README for your "Flutter-Study" repository, focusing on showcasing your self-learning journey with Flutter:
-
----
-
 # Flutter-Study
 
 This repository serves as a personal showcase of my journey learning Flutter. It contains various projects, examples, and experiments organized into different categories. Each directory represents a different aspect of Flutter development and learning.
